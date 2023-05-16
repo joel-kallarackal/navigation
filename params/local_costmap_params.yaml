@@ -1,0 +1,31 @@
+local_costmap:
+  global_frame: odom
+  robot_base_frame: base_link
+  update_frequency: 5.0
+  publish_frequency: 2.0 #"publish_frequency" parameter determines the rate, in Hz, at which the costmap will publish visualization information
+  static_map: false
+  rolling_window: true #Setting the "rolling_window" parameter to true means that the costmap will remain centered around the robot as the robot moves through the world
+  width: 6.0 #width of costmap(in meters)
+  height: 6.0 #height of costmap(in meters)
+  resolution: 0.05 #resolution of costmap(in meters/cell)
+
+  plugins:
+    - {name: obstacle_layer,        type: "costmap_2d::ObstacleLayer"}
+    - {name: inflation_layer,        type: "costmap_2d::InflationLayer"}
+  
+  # http://wiki.ros.org/costmap_2d/hydro/obstacles 
+  obstacle_layer:   
+    observation_sources: point_cloud_sensor
+    point_cloud_sensor: 
+      topic: /camera/depth/points
+      sensor_frame: zed_camera
+      observation_persistance: 0
+      expected_update_rate: 0
+      data_type: PointCloud2
+      clearing: false
+      marking: true
+      max_obstacle_height: 10
+      min_obstacle_height: 1.2
+      obstacle_range: 3
+      raytrace_range: 4
+      inf_is_valid: false
