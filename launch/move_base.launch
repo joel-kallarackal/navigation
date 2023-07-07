@@ -1,22 +1,12 @@
 <launch>
-    <!-- Launching the map_server and publishing a map to static_map -->
-    <!-- <arg name="map_file" default="$(find navigation)/maps/mymap.yaml"/>
-        <node pkg="map_server" type="map_server" name="map_server" output="screen" args="$(arg map_file)"/>
-     -->
-    <!-- Launching move_base node -->
-    <node pkg="move_base" type="move_base" name="move_base" output="screen">
-        <!-- <param name="base_global_planner" value="navfn/NavfnROS"/> -->
-        <!-- <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS"/> -->
-        <param name="controller_frequency" value="10.0"/>
-        <rosparam file="$(find navigation)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
-        <rosparam file="$(find navigation)/params/costmap_common_params.yaml" command="load" ns="local_costmap" />
-        <rosparam file="$(find navigation)/params/local_costmap_params.yaml" command="load" />
-        <rosparam file="$(find navigation)/params/global_costmap_params.yaml" command="load" />
-        <rosparam file="$(find navigation)/params/base_local_planner_params.yaml" command="load" />
-        <rosparam file="$(find navigation)/params/move_base_params.yaml" command="load" />
-        <!-- 
-        <rosparam file="$(find provide_map)/params/local_planner_params.yaml" command="load" />
-        <rosparam file="$(find provide_map)/params/global_planner_params.yaml" command="load" /> 
-        -->
-    </node>
-</launch>
+
+   <master auto="start"/>
+
+   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find navigation)params/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
+    <rosparam file="$(find navigation)/params/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find navigation)params/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find navigation)params/global_costmap_params.yaml" command="load" /> 
+    <rosparam file="$(find navigation)params/base_local_planner_params.yaml" command="load" />
+   </node>
+</launch> 
